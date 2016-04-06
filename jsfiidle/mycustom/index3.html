@@ -1,0 +1,114 @@
+<style type="text/css">
+ul.list-group{
+	min-height: 100px;
+	border: 2px solid skyblue;
+	border-radius: 4px;
+}
+.class_b{
+	position: fixed !important;
+	right: 0;
+}
+</style>
+<link rel="stylesheet" type="text/css" href="/bootstrap.css">
+<div class="container">
+		<div class="row"><div class="btn btn-info mm">+/-</div>
+		<div class="class_a col-md-8">
+			<section class="section1">
+				<h2>Section1</h2><div class="btn btn-info pull-right sm">+/-</div>
+				<ul foo-class="c1" class="list-group"><h3>SubSection1</h3>
+					<ul foo-class="c11" class="list-group"></ul>				
+					<button class="add_sub btn btn-danger">AddSub</button>		
+				</ul>
+			</section>
+		</div>
+		<div class="class_b col-md-4">
+			<section>
+				<h2>Listing</h2>
+				<ul id="sort" class="list-group">
+					<li foo-id="InputText" class="list list-group-item list-group-item-success">
+						Inputtext
+						<button class="hd pull-right">-</button>
+						<div class="more" style="display:none;">
+							<label>Label</label>
+							<input type="text">
+						</div>
+					</li>
+					<li foo-id="InputTextArea" class="list list-group-item list-group-item-info">
+						InputtextArea
+						<button class="hd pull-right">-</button>
+						<div class="more" style="display:none;">
+							<label>Label</label>
+							<input type="text">
+						</div>
+					</li>
+				</ul>
+			</section>			
+			<button class="add_more btn btn-primary">AddMain</button>
+			<div id="result"></div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="/jquery.js"></script>
+<script type="text/javascript" src="/jquery-ui.js"></script>
+<script type="text/javascript">
+glob();
+var my_data=[];
+
+function show_json(){
+	$("#result").text(JSON.stringify(my_data));
+}
+function all_json(cid, lbl){
+	my_data.push({
+		"label": lbl,
+	    "field_type": "text",    
+	    "field_options": {},
+	    "cid": cid
+	});
+	show_json();
+}
+function glob(){
+	$( ".list-group" ).sortable({
+	    cursor:"move",
+	    helper : "clone",
+	    connectWith: ".list-group",	    
+	    receive: function( event, ui ){		  	
+		    if($(ui.sender).attr('id') == "sort"){		    	
+		  		var cid = $(this).closest('ul').attr('foo-class');          	
+		       	ui.item.clone().appendTo('.class_b .list-group');
+		       	all_json(cid, ui.item.attr('foo-id'));
+		    }
+	    }
+	});	
+}
+var cc1 = 2;
+$(document).on('click', '.add_more', function(){
+	var data_a = '<section class="section'+cc1+'"><h2>Section'+cc1+'</h2><div class="btn btn-info pull-right sm">+/-</div><ul foo-class="c'+cc1+'" class="list-group"><h3>SubSection1</h3><ul foo-class="c'+cc1+'1" class="list-group"></ul><button class="add_sub btn btn-danger">AddSub</button></ul></section>';	
+	$(".class_a").append(data_a)
+	cc1++;
+	glob();
+})
+$(document).on('click', '.sm', function(){	
+	$(this).parent().find('ul>ul, button').toggle();	
+	glob();
+})
+$(document).on('click', '.mm', function(){	
+	$(this).parent().find('ul>ul, button').toggle();	
+	glob();
+})
+$(document).on('click', '.add_sub', function(){
+	var cc2 = $(this).parent('ul').find('ul').length+1;
+	var cc3 = $(this).parent('ul').attr('foo-class');	
+	var data_b = '<h3>SubSection'+cc2+'</h3><ul  foo-class="'+cc3+cc2+'" class="list-group ui-sortable"></ul>';
+	$(this).parent('ul.list-group').append(data_b);
+	cc2++;
+	glob();
+ });
+$(document).on('click', '.class_a .hd', function(){	
+	$(this).parent().find('div').toggle();	
+	glob();
+})
+$(document).on('keyup', 'input', function(){	
+	console.log($(this).val());
+	glob();
+})
+</script>

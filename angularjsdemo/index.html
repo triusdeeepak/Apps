@@ -1,0 +1,70 @@
+
+<!DOCTYPE html>
+<html ng-app="">
+  <head >
+    <title>AngularJs Demo</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
+</head>
+
+<body>
+<div ng-controller="formController">
+  <form >
+    First Name:<br>
+    <input type="text" ng-model="fname" required><br>
+    Last Name:<br>
+    <input type="text" ng-model="lname">
+    <br>
+    DOB:<br>
+    <input type="text" ng-model="dob"><br>
+    Email:<br>
+    <input type="text" ng-model="email" required><br>
+    Password:<br>
+    <input type="password" ng-model="pswd" required><br><br>
+    <input type="reset" value="Reset">
+    <input type="button"  ng-click="update()" value="Save">
+    <input type="button" ng-click="edit()" value="Edit">
+  </form>
+	<!-- <ul>
+      <li ng-repeat="x in names">
+        {{ x.fname}}
+      </li>
+    </ul> -->
+</div>
+
+<script>
+function formController($scope,$http) {
+	
+	$scope.update = function() {
+    var data = {
+      'fname' : $scope.fname,
+      'lname' : $scope.lname,
+      'dob' : $scope.dob,
+      'email' : $scope.email,
+      'pswd': $scope.pswd
+     }
+     console.log(data);
+       
+    $http.post('save.php',data)
+      .success(function(response){
+        console.log(response);
+      })
+      .error(function(error){
+        console.log("error");
+      });
+    
+}
+	$http({method: "GET", url: "save.php"})
+	.success(function(response){$scope.names=  response;
+		console.log(response);})
+}
+ 
+</script>
+
+</body>
+</html>

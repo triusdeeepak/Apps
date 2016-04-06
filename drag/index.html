@@ -1,0 +1,51 @@
+<link rel="stylesheet" type="text/css" href="lib.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<div id="maincontainer">
+    <div id="navtoplistline">&nbsp;</div>
+    <div id="contentwrapper">
+        <div id="maincolumn">
+            <div class="text">
+                <hr />
+                <div class="listBlock" id="copy_block">
+                     <h2>My Articles</h2>
+                    <ul id="sortable2" class='droptrue'>
+                    </ul>
+                        <ul id="sortable3" class='droptrue'></ul>
+                </div>
+                <div class="listBlock" id="main_block">
+                     <h2>Available</h2>
+                    <ul id="sortable1" class='droptrue1'>
+                        <li id="text">InputText
+                            <span class="it">+</span>
+                            <div class="it_">
+                                Label : <input class="inp_txt_lbl" type="text">
+                                IsRequired : <input class="inp_chk_lbl" type="checkbox">
+                            </div>
+                        </li>
+                        <li id="textarea">TextArea
+                            <span class="ta">+</span>
+                            <div class="ta_">
+                                Label : <input class="inp_txt_lbl" type="text">
+                                IsRequired : <input class="inp_chk_lbl" type="checkbox">
+                            </div>
+                        </li>
+                        <li id="select">Select
+                            <span class="sb">+</span>
+                            <div class="sb_">
+                                Label : <input class="inp_txt_lbl" type="text">
+                                IsRequired : <input class="inp_chk_lbl" type="checkbox" /><br>
+                                Options : 
+                                <p class="opt1"><input class="inp_opt_1" type="text">
+                                <span onclick="pp()">+</span>
+                                <span onclick="mm()">-</span></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="postOrder"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="lib.js"></script>

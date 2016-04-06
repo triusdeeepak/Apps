@@ -1,0 +1,26 @@
+<link rel="stylesheet" type="text/css" href="/bootstrap.css">
+<div>
+<div class="drop-box" style="border: 1px solid; height: 100px; width: 100px;"></div>
+<span class="add_more">AddMore</span>
+</div>
+<p draggable="true" id="x"><span>InputText</span></p>
+<p draggable="true" id="y"><span>Select</span></p>
+<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+<script>
+
+$('#x').bind('dragstart', function(e) {
+    e.originalEvent.dataTransfer.effectAllowed = 'copy';
+    e.originalEvent.dataTransfer.setData('Text', '#x');
+});
+
+$('#y').bind('dragstart', function(e) {
+    e.originalEvent.dataTransfer.effectAllowed = 'copy';
+    e.originalEvent.dataTransfer.setData('Text', '#y');
+});
+$('.drop-box').bind('drop', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    $(this).html($(e.originalEvent.dataTransfer.getData('Text')).clone());
+    return false;
+}).bind('dragover', false);
+</script>

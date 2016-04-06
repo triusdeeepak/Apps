@@ -1,0 +1,77 @@
+<html>
+    <head>
+        <script src="http://www.google.com/jsapi" type="text/javascript"></script>
+        <script type="text/javascript" >
+           google.load("jquery", "1.6.3");
+           google.load("jqueryui", "1.8.16");
+        </script>        
+        <style type="text/css">
+            .col, .col1{
+                float:left;
+                padding: 5px 5px 5px 5px;
+                margin: 5px 5px 5px 5px;
+                width:90%;
+                height:200px;
+                border:1px solid black;
+            }
+            #section_1,#htmltags{
+                width:40%;
+                height:400px;
+                float:left;
+                display: inline-block;
+                padding: 5px 5px 5px 5px;
+                margin: 5px 5px 5px 5px;
+                border:1px solid black;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="wrapper">
+            <div class="col" id="section_1">Main
+            <div class="col1" id ="section_1a"></div>                
+            </div>
+            <div id="htmltags">
+                <div id="drag1" class="drag">asdas</div>
+                <div id="drag2" class="drag">asdasdsasd</div>                
+            </div>
+        </div>        
+        </div>
+        <script type="text/javascript">
+        $(document).ready(function () {
+            $('.col, .col1').click(function(){
+                console.log(this.closest('div'));
+            });
+            var x = null;
+            //Make element draggable
+            $(".drag").draggable({                
+                stop: function( event, ui ) {
+                },
+                helper: 'clone',
+                cursor: 'move',
+                //tolerance: 'fit'
+            });
+            $(".col, .col1").droppable({
+                drop: function (e, ui) {
+                    //console.log($(this))
+                    var this_id = $(this).attr('id');
+                    if ($(ui.draggable)[0].id != "") {
+                        x = ui.helper.clone();
+                        ui.helper.remove();
+                        x.draggable({
+                            //helper: 'original',
+                            containment: '#'+this_id//,
+                            //tolerance: 'fit'
+                        });/*
+                        x.resizable({
+                            maxHeight: 40,
+                            minHeight: 40,
+                            minWidth: 50
+                        });*/
+                        x.appendTo('#'+this_id);
+                    }
+                }
+            });            
+        });
+        </script>
+    </body>
+</html>

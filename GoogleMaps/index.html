@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Simple Polylines</title>
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+// This example creates a 2-pixel-wide red polyline showing the path of William
+// Kingsford Smith's first trans-Pacific flight between Oakland, CA, and
+// Brisbane, Australia.
+
+function initMap() {
+  var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var labelIndex = 0;
+
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 13,
+    center: {lat: 30.704151, lng: 76.790104},
+    mapTypeId: google.maps.MapTypeId.TERRAIN
+  });
+  /*var place1 = {lat: 30.704151 , lng: 76.790104};
+  var place2 = {lat: 30.717821, lng: 76.812082};
+  var place3 = {lat: 30.740591, lng: 76.790463};
+  var place4 = {lat: 30.726076, lng: 76.768372};  
+  var place5 = {lat: 30.705103, lng: 76.789060};
+  var flightPlanCoordinates = [];  
+  for (var i = 0; i < flightPlanCoordinates.length; i++) {    
+  };*/  
+/*
+  var flightPath = new google.maps.Marker({
+    path: flightPlanCoordinates,
+    geodesic: true,
+    strokeColor: '#64b5f6',
+    strokeOpacity: 1.0,
+    strokeWeight: 4
+  });*/
+
+  flightPath.setMap(map);
+  google.maps.event.addListener(map, 'click', function( event ){
+    var my_lat = event.latLng.lat();
+    var my_lng = event.latLng.lng();    
+    var place = {lat: my_lat , lng: my_lng}
+    //flightPlanCoordinates.push(place);
+    new google.maps.Marker({ position: place, label: labels[labelIndex++ % labels.length], map: map });
+  });
+}
+
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBgcf35n3d8WPZURySJsb6mpp7JAVy8ZJ8&signed_in=true&callback=initMap"></script>
+  </body>
+</html>

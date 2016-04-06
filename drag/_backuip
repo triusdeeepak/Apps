@@ -1,0 +1,165 @@
+<style>
+.listBlock {
+    float: left;
+}
+#sortable1, #sortable2 {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    margin-right: 100px;
+    background: #eee;
+    padding: 5px;
+    width: 300px;
+    border: 1px solid black;
+}
+#sortable1 li, #sortable2 li {
+    color:black;
+    cursor: move;
+    margin: 5px;
+    padding: 5px;
+    font-size: 1.2em;
+    width: 250px;
+    background: none;
+    background-color: white;
+}
+.selected {
+    background:red !important;
+}
+.hidden {
+    display:none !important;
+}
+ul {
+    list-style-type: none;
+}
+.selected {
+  background:red !important;
+}
+.hidden, li div {
+  display:none;
+}
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<div id="maincontainer">
+    <div id="navtoplistline">&nbsp;</div>
+    <div id="contentwrapper">
+        <div id="maincolumn">
+            <div class="text">
+                <hr />
+                <div class="listBlock" id="copy_block">
+                     <h2>My Articles</h2>
+                    <ul id="sortable2" class='droptrue'></ul>
+                </div>
+                <div class="listBlock" id="main_block">
+                     <h2>Available</h2>
+                    <ul id="sortable1" class='droptrue'>
+                        <li id="text">InputText
+                            <span class="it">+</span>
+                            <div class="it_">
+                                Label : <input class="inp_txt_lbl" type="text">
+                                IsRequired : <input class="inp_chk_lbl" type="checkbox">
+                            </div>
+                        </li>
+                        <li id="textarea">TextArea
+                            <span class="ta">+</span>
+                            <div class="ta_">
+                                Label : <input class="inp_txt_lbl" type="text">
+                                IsRequired : <input class="inp_chk_lbl" type="checkbox">
+                            </div>
+                        </li>
+                        <li id="select">Select
+                            <span class="sb">+</span>
+                            <div class="sb_">
+                                Label : <input class="inp_txt_lbl" type="text">
+                                IsRequired : <input class="inp_chk_lbl" type="checkbox" /><br>
+                                Options : 
+                                <p class="opt1"><input class="inp_opt_1" type="text">
+                                <span onclick="pp()">+</span>
+                                <span onclick="mm()">-</span></p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div id="postOrder"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+var dj_data = [];
+ 
+$(function () {
+    $('.droptrue').on('click', 'li', function () {
+        $(this).toggleClass('selected');
+    });
+
+    $("#sortable1.droptrue").sortable({
+        connectWith: 'ul.droptrue',        
+        remove:function(e, ui){
+            ui.item.clone().appendTo('#sortable1');            
+        },
+        /*helper: function (e, item) {
+            //console.log('parent-helper');
+            //console.log(item);            
+            if(!item.hasClass('selected'))
+               item.addClass('selected');
+            var elements = $('.selected').not('.ui-sortable-placeholder').clone();
+            var helper = $('<ul/>');
+            item.siblings('.selected').addClass('hidden');
+            return helper.append(elements);
+        },*/
+        /*start: function (e, ui) {
+            //console.log("Start : "+e, ui);
+            var elements = ui.item.siblings('.selected.hidden').not('.ui-sortable-placeholder');
+            ui.item.data('items', elements);
+        },        
+        stop: function (e, ui) {
+        	//console.log("Stop : "+e, ui);
+            ui.item.siblings('.selected').removeClass('hidden');
+            $('.selected').removeClass('selected');
+        },*/
+        update: updatePostOrder
+    });
+    $("#sortable2.droptrue").sortable({
+        receive: function (e, ui) {
+            ui.item.before(ui.item.data('items'));            
+        },
+    });
+    //$("#sortable1, #sortable2").disableSelection();
+    //$("#sortable1, #sortable2").css('minHeight', $("#sortable1").height() + "px");
+    updatePostOrder();
+});
+$(".inp_txt_lbl").keydown(function(){    
+    setTimeout(function(){        
+        updatePostOrder();
+    }, 2000);
+})
+$(".inp_chk_lbl").click(function(){    
+    setTimeout(function(){
+        updatePostOrder();    
+    }, 2000);    
+})
+function updatePostOrder() {
+    var arr = [];
+    $("#sortable2 li").each(function (){        
+        arr['field_type'] = $(this).attr('id');
+        arr['label'] = $(this).find('.inp_txt_lbl').val();
+        if ($('.inp_chk_lbl').is(":checked")){
+            arr['required'] = true;          
+        }
+    });    
+    //console.log(arr);
+}
+$("#sortable1 li span").click(function(){
+    $("."+$(this).attr('class')+'_').toggle();
+})
+var one_opt = $(".opt1").html();
+var cc = 1;
+function pp(){
+    var nxt = cc+1;
+    $(".opt"+cc).after('<p class="opt'+nxt+'">'+one_opt+'</p>'); cc+=1;
+}
+function mm(){    
+    $(this).parent().remove();
+}
+</script>

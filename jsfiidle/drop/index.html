@@ -1,0 +1,53 @@
+<style>
+#sortable1, #sortable2,#sortable3 { border: 1px solid #ccc; width: 100px; height: 200px; list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+#sortable1 li, #sortable2 li, #sortable3 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+</style>
+<div class="demo">
+    <ul id="sortable1" class="connectedSortable">
+    <li class="ui-state-default">Item 1</li>
+    <li class="ui-state-default">Item 2</li>
+    <li class="ui-state-default">Item 3</li>
+    <li class="ui-state-default">Item 4</li>
+    <li class="ui-state-default">Item 5</li>
+    </ul>
+    <ul id="sortable2" class="col connectedSortable"></ul>
+    <ul id="sortable3" class="col connectedSortable"></ul>
+</div><!-- End demo -->
+<script src="/jquery.min.js"></script>
+<script src="/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {    
+    /*$( "#sortable1" ).sortable({
+        connectWith: ".connectedSortable",        
+        remove: function(event, ui) {
+            console.log(ui.item)
+            ui.item.clone().appendTo('#sortable3');
+            $(this).sortable('cancel');
+        }
+    }).disableSelection();
+    $( "#sortable3" ).sortable({
+        connectWith: ".connectedSortable",
+        receive:function(event, ui){
+            console.log(ui)
+        }
+    });*/
+
+    $( ".col" ).droppable({
+            activeClass: "ui-state-hover",
+            hoverClass: "ui-state-active",
+            drop: function( event, ui ) {
+
+                var targetElem = $(this).attr("id");
+
+                $( this )
+                    .addClass( "ui-state-highlight" )
+                    .find( "p" )
+                        .html( "Dropped! inside " + targetElem );
+
+                        alert(targetElem);
+
+            }
+        });
+    
+});
+</script>

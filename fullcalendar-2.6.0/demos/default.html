@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8' />
+<link href='../fullcalendar.css' rel='stylesheet' />
+<link href='../fullcalendar.print.css' rel='stylesheet' media='print' />
+<script src='../lib/moment.min.js'></script>
+<script src='../lib/jquery.min.js'></script>
+<script src='../fullcalendar.min.js'></script>
+<script>
+
+	$(document).ready(function() {
+		var arr = [
+				{
+					title: 'All Day Event',
+					start: '2016-01-01'
+				},
+				{
+					title: 'Long Event',
+					start: '2016-01-01',
+					end: '2016-01-1'
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: '2016-01-1'
+				},
+				{
+					id: 999,
+					title: 'Repeating Event',
+					start: '2016-01-1'					
+				},
+				{
+					title: 'Conference',
+					start: '2016-01-1',
+					end: '2016-01-1'
+				},
+				{
+					title: 'Meeting',
+					start: '2016-01-1',
+					end: '2016-01-1'
+				},
+				{
+					title: 'Lunch',
+					start: '2016-01-1'
+				},
+				{
+					title: 'Meeting',
+					start: '2016-01-1'
+				},
+				{
+					title: 'Happy Hour',
+					start: '2016-01-1'
+				},
+				{
+					title: 'Dinner',
+					start: '2016-01-1'
+				},
+				{
+					title: 'Birthday Party',
+					start: '2016-01-1'
+				},
+				{
+					title: 'Click for Google',
+					url: 'http://google.com/',
+					start: '2016-01-1'
+				}
+			]
+		var aaa = 1;
+		var arr_ = [];
+		$('#calendar').fullCalendar({
+			defaultDate: '2016-01-13',
+			editable: false,
+			eventLimit: false,
+			events: arr,
+			eventRender: function(event, element) {
+		        element.find(".fc-title").each(function(index) {		        	
+		            var aes = element.find('.fc-time').text();
+		            if(aes !== 'null'){		            	
+			            if(aaa == 1){
+			            	arr_.push(aes);		            	
+			            }else{
+				            if(jQuery.inArray(aes, arr_) !== -1){
+				            	arr_.push(aes);
+				            }else{
+				            	//console.log(aes);
+				            }		            	
+			            }
+		            }
+		            aaa += 1;
+		        });
+		    },
+		});		
+		            console.log(arr_.length);
+	});
+
+</script>
+<style>
+
+	body {
+		margin: 40px 10px;
+		padding: 0;
+		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
+		font-size: 14px;
+	}
+
+	#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+	}
+
+</style>
+</head>
+<body>
+
+	<div id='calendar'></div>
+
+</body>
+</html>

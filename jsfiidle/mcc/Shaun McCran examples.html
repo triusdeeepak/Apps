@@ -1,0 +1,38 @@
+	<script type="text/javascript" src="./Shaun McCran examples_files/jquery.js"></script>
+	<script src="./Shaun McCran examples_files/jquery.ui.core.js"></script>
+	<script src="./Shaun McCran examples_files/jquery.ui.widget.js"></script>
+	<script src="./Shaun McCran examples_files/jquery.ui.mouse.js"></script>
+	<script src="./Shaun McCran examples_files/jquery.ui.draggable.js"></script>
+	<script src="./Shaun McCran examples_files/jquery.ui.droppable.js"></script>
+	<style type="text/css">
+	.droppable{ border :1px solid #ccc; }
+	</style>
+	<script>
+	$(function() {
+		$( ".draggable" ).draggable({ revert: "invalid" });
+		$( ".droppable" ).droppable({
+			activeClass: "ui-state-hover",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+				var targetElem = $(this).attr("id");
+				alert(targetElem);
+			}
+		});
+	});
+	</script>
+
+	<ul class="draggable">
+		<li>I return home when I'm not dropped in the right place</li>
+	</ul>
+
+	<div class="droppable" id="element 1">
+		<p>Section1</p>
+	</div>
+
+	<div class="droppable" id="element 2">
+		<p>Section2</p>
+	</div>
+
+	<div class="droppable" id="element 3">
+		<p>Section3</p>
+	</div>

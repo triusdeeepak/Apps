@@ -1,0 +1,55 @@
+<style type="text/css">
+#origin
+{
+  background-color: green;
+}
+#drop
+{
+  background-color: red;
+  min-height: 120px;
+}
+#sort3{
+  background:green;
+}
+.list{ min-height: 120px;} /* you need to set the size of the ul otherwise it may not detect the dropped item */
+.list li{
+display: inline-block;
+list-style-type: none;
+padding-right: 20px;
+}
+</style>
+<div id="wrapper">
+	<div id="origin" class="fbox">
+    <ul id="sort1" class="list">
+      <li class="draggable">11133</li>
+      <li class="draggable">11122</li>
+      <li class="draggable">11121</li>
+      <li class="draggable">11123</li>
+      <li class="draggable">11142</li>
+    </ul>
+	</div>
+  <p>test</p>
+	<div id="drop" class="fbox">
+     <ul id="sort2" class="list"></ul>
+     <ul id="sort3" class="list"></ul>
+	</div>
+</div>
+<script type="text/javascript" src="/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery-ui.js"></script>
+<script type="text/javascript">
+$( "#sort1, #sort2, #sort3" ).sortable({      
+      cursor:"move",
+      helper : "clone",
+      connectWith: ".list",
+      receive: function( event, ui ){
+        if($(ui.sender).attr('id') == "sort1"){
+          ui.item.clone().appendTo('#sort1');          
+        }
+        //if($(ui.sender).attr('id')==='sort1' && $('#sort2').children('li').length>3){
+          //$(ui.sender).sortable('cancel');
+        //}
+      }
+});
+
+$( "#sort1,#sort2" ).disableSelection();
+</script>

@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html ng-app="">
+  <head >
+    <title>New Sails App BY Ben in layout js</title>
+
+    <!-- Viewport mobile tag for sensible mobile support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+<script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.2.27/angular.min.js"></script>
+</head>
+
+<body>
+<div ng-controller="formController">
+  <form >
+    First Name:<br>
+    <input type="text" ng-model="fname"><br>
+    Last Name:<br>
+    <input type="text" ng-model="lname">
+    <br>
+    DOB:<br>
+    <input type="text" ng-model="dob"><br>
+    Email:<br>
+    <input type="text" ng-model="email"><br>
+    Password:<br>
+    <input type="text" ng-model="pswd"><br><br>
+    <input type="reset" value="Reset">
+    <input type="button"  ng-click="update()" value="Save">
+  </form>
+    
+    <ul>
+      <li ng-repeat="x in names">
+        {{ x.Name + ', ' + x.Country }}
+      </li>
+    </ul>
+
+
+</div>
+
+<script>
+function formController($scope,$http) {
+	
+	$scope.update = function() {
+    var data = {
+      'fname' : $scope.fname,
+      'lname' : $scope.lname,
+      'dob' : $scope.dob,
+      'email' : $scope.email,
+      'pswd': $scope.pswd
+    }
+
+       
+    $http.post('save.php',data)
+      .success(function(response){
+        console.log(response);
+      })
+      .error(function(error){
+        console.log("error");
+      });
+    
+}
+    $http.get("http://www.w3schools.com//website/Customers_JSON.php")
+  .success(function(response) {$scope.names = response;});
+}
+ 
+</script>
+
+</body>
+</html>

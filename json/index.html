@@ -1,0 +1,28 @@
+<input type="text" id="section1">
+<button type="button" class="section1" >wlla</button>
+<input type="text" id="section2">
+<button type="button" class="section2">wlla</button>
+<script type="text/javascript" src="/jquery.min.js"></script>
+<script type="text/javascript">
+var asd = [{"id":"1456529853032","label":"asdasd","field_type":"text","field_options":"","cid":"c1-s1"}]
+$('button').click(function(){
+	var aaa = $(this).attr('class')
+	var sss = $('#'+aaa).val()
+	var check = false;
+	asd.forEach(function(aa,cc){		
+		if(aa[aaa]){ check = true }
+	})
+	if(check){
+		asd.forEach(function(aa,cc){			
+			if(aa[aaa]){				
+				aa[aaa] = sss
+				console.log(true)
+			}			
+		})
+	}else{
+		asd.push({ [aaa]: sss })
+	}		
+	console.log(check)
+	console.log(JSON.stringify(asd))
+})
+</script>

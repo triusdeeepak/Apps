@@ -1,0 +1,53 @@
+<button type="button" id="id1">Add Section</button>
+<button type="button" id="id2">Add Section</button>
+<button type="button" id="id3">Change label</button>
+<pre id="result"></pre>
+<script src="/jquery.js"></script>
+<script>
+$(document).ready(function(){
+	var uacl = {}
+	uacl["1_3_v"] = 1;
+	uacl["1_3_e"] = 0;
+	var json_arr = {}
+	var fields = {}	
+	var section1 = {}	
+	var fields_id_1 = {}
+	var subsections1 = {}
+	var subsections = {}
+	fields_id_1["label"] = "label1"
+	fields_id_1["id"] = "fields_id_1"
+	fields_id_1["fields_option"] = {}
+	fields_id_1["order"] = ""
+	fields["fields_id_1"] = fields_id_1	
+	fields["fields_id_2"] = fields_id_1	
+	subsections1["label"] = "";
+	subsections1["fields"] = fields;
+	subsections1["uacl"] = uacl;
+	subsections.subsections1 = subsections1
+	subsections.subsections2 = subsections1
+	section1.subsections=subsections
+	section1["uacl"] = uacl
+	section1["label"] = ""
+	json_arr.section1=section1;
+	json_arr.section2=section1;
+	function make_json(){
+		console.log(json_arr)
+		json_json = JSON.stringify(json_arr, undefined, 4)
+		//console.log(json_json)
+		$("#result").text(json_json)	
+	}
+	//make_json()
+	$("#id1").click(function(){
+		json_arr.section3={}
+		make_json()
+	})
+	$("#id2").click(function(){
+		json_arr.section1.subsections.subsections1.fields["fields_id_3"]=fields_id_1
+		make_json()
+	})
+	$("#id3").click(function(){
+		json_arr.section1.subsections.subsections1.fields["fields_id_1"].label="New label"
+		make_json()
+	})
+})
+</script>

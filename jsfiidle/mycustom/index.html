@@ -1,0 +1,153 @@
+<link rel="stylesheet" type="text/css" href="/bootstrap.css">
+<style type="text/css">
+.drop
+{
+  background-color: #f7f7f9;
+  min-height: 120px;
+}
+.list .list{
+  background:#eee;
+}
+.list{ min-height: 100px;} /* you need to set the size of the ul otherwise it may not detect the dropped item */
+.list li{
+  display: inline-block;
+  list-style-type: none;
+  padding-right: 20px;
+}
+.left, .right{
+  display: inline-block;
+  float: left;
+}
+.left{
+  width: 76%;  
+}
+.right{
+  position: fixed;
+  margin: 10px;
+}
+#sort1 .txt_m{ display: none; }
+</style>
+<div id="wrapper" class="container">
+  <div class="row">
+    <div class="left col-md-6">
+      <div class="drop"><button class="toggle">Toggle</button>
+         <h1>Section1</h1>
+         <ul id="sort10" foo-section-id="1" foo-section="section" foo-id="sort10" class="list">
+            <button class="toggle">Toggle</button><h2>Sub Section1</h2>
+            <ul id="sort11" foo-section-id="1" foo-section="subsection" foo-id="sort11" class="list"></ul>
+         </ul>
+         <button foo-id="1" class="add_more_sub">Add More Sub Section</button>
+      </div>
+    </div>
+    <div class="right col-md-6">
+      <div id="origin" class="fbox">
+        <ul id="sort1" >
+          <li class="draggable">InputText
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />
+            </div>
+          </li>
+          <li class="draggable">Heading
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />
+            </div>
+          </li>
+          <li class="draggable">Date
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />
+            </div>
+          </li>
+          <li class="draggable">Radio
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />
+            </div>
+          </li>
+          <li class="draggable">TextArea
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />
+            </div>
+          </li>
+          <li class="draggable">CheckBox
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />            
+            </div>
+          </li>
+          <li class="draggable">CheckBox Group
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />            
+            </div>
+          </li>
+          <li class="draggable">Select
+            <button class="txt_m">More</button>
+            <div class="txt_data" style="display:none">
+              <label>Label</label><input type="text" />            
+            </div>
+          </li>
+        </ul>
+      </div>  
+      <button class="add_more">Add More Section</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="/jquery.min.js"></script>
+<script type="text/javascript" src="/jquery-ui.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){  
+  //function more(){
+    $(".txt_m").click(function(){
+      console.log("more_clciked");
+      $(this).parent().find('.txt_data').toggle();
+    })
+  //}
+  function toggle(){    
+    $(".toggle").click(function(){
+      $(this).parent().find('ul').toggle();
+    })
+  }
+  function abc(){
+    $( "#sort1, .list" ).sortable({      
+        //cursor:"move",
+        helper : "clone",
+        connectWith: ".list",
+        receive: function( event, ui ){
+          if($(ui.sender).attr('id') == "sort1"){            
+            ui.item.clone().appendTo('#sort1');            
+          }
+        }
+    });
+    $( "#sort1, .list" ).disableSelection();    
+  }
+  var counter_2 = 2;
+  //function sub(){
+    var counter_3 = 2;    
+    $('.add_more_sub').click(function(){
+      console.log("add_more_sub")
+      var this_id=$(this).attr('foo-id');
+      var data='<h2>Sub Section'+counter_3+'</h2><ul class="list ui-sortable ui-droppable" foo-id="sort'+this_id+counter_3+'" id="sort'+this_id+counter_3+'"></ul>';
+      $("#sort"+this_id+"0").append(data);
+      counter_3 += 1;
+      abc();
+    })
+  //}
+  $('.add_more').click(function(){    
+    var data='<div class="drop"><button class="toggle">Toggle</button><h1>Section'+counter_2+'</h1><ul foo-section-id="'+counter_2+'" foo-section="section" id="sort'+counter_2+'0" foo-id="sort'+counter_2+'0" class="list"><button class="toggle">Toggle</button><h2>Sub Section1</h2><ul foo-section-id="'+counter_2+'" foo-section="subsection" id="sort'+counter_2+'1" foo-id="sort'+counter_2+'1" class="list"></ul></ul><button foo-id="'+counter_2+'" class="add_more_sub">Add More Sub Section</button></div>';
+    $(".left").append(data);
+    counter_2 += 1;
+    //sub();
+    //more();
+    toggle();
+    abc();
+  })
+  //sub();
+  //more();
+  toggle();
+  abc();
+})
+</script>

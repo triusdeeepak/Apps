@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!-- saved from url=(0040)http://localhost/Apps/dragdrop/index.php -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Bootstrap Example</title>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./index3_files/bootstrap.min.css">
+  <link rel="stylesheet" href="./index3_files/jquery-ui.css">
+  
+  <script src="./index3_files/jquery.min.js"></script>
+  <script src="./index3_files/bootstrap.min.js"></script>
+  
+  <script src="./index3_files/jquery-ui.js"></script>
+  
+	<style>
+  
+  .dropable {
+	  border:1px solid;
+	  min-height: 500px;
+	  width: 500px;
+  }
+  
+  .ui-state-default { margin: 10px; padding: 5px; width: 150px; }
+  
+  .dropable .row div{ border:1px dotted;min-height:50px;}
+  </style>
+  <script>
+  $(function() {
+    $( "#drag2 div" ).draggable({
+		helper: 'clone',
+	});
+	
+    $( "#drag1 div" ).draggable({
+		helper: 'clone',
+		//revert: "invalid",
+		//connectToSortable: ".dropable",
+		//tolerance: 'fit',
+		//revert: true ,
+		//iframeFix: true,
+		//appendTo: $(".dropable"),
+		//scope: "#drag1 li",
+		/* snap: true,
+		snapMode: "inner",
+		cursor : 'move', */
+		//drag: function( event, ui ) { console.log('drag'); },
+		//start: function( event, ui ) { console.log("start"); },
+		//stop: function( event, ui ) { console.log("stop"); }
+	
+	});
+	
+    $( ".dropable" ).droppable({
+		greedy: true,
+		//accept: '#drag1 li',
+		revert: true,
+		drop: function( event, ui ) {
+			//var drag_id = $(ui.draggable).html();
+			//console.log(ui.draggable.attr('nos'));
+			x = ui.helper.clone();
+			ui.helper.remove();
+			if(ui.draggable.hasClass('sec')){
+				var main_row = document.createElement('div');
+				$(main_row).addClass('row test');
+				var sort_row = document.createElement('div');
+				$(sort_row).addClass('testsort');
+				for(i=0;i<ui.draggable.attr('nos');i++){
+					var inner_col = document.createElement('div')
+					var inner_sort = document.createElement('div')
+					$(inner_sort).addClass('sortinner')
+					$(inner_col).addClass('col-sm-'+ui.draggable.attr('data-class')).html('Drop Field Here');
+					$(inner_sort).appendTo(inner_col);
+					$(inner_col).appendTo(sort_row);
+				}
+				$(sort_row).appendTo(main_row);
+				$(main_row).appendTo($(this).children(".sortable"));
+				
+				$( ".testsort div").droppable({
+					greedy: true,
+					revert:true,
+					//helper: "clone",
+					drop: function( event, ui ) {
+						if(ui.draggable.hasClass('field')){
+							var main_row2 = document.createElement('div');
+							main_row2.innerHTML ="fhduhf";
+							$(main_row2).appendTo($(this).children(".sortinner"));
+							$( ".sortinner").sortable({ helper: "clone",connectWith: ".sortinner" });
+						}
+					}
+				});
+			}
+		}
+		
+	});
+	
+	$( ".sortable").sortable({ helper: "clone",connectWith: ".sortable" });
+	$( ".sec-sortable").sortable({ helper: "clone",connectWith: ".sec-sortable" });
+	
+	//$( ".testsort div").sortable({ helper: "clone", });
+	//$( "ul, li" ).disableSelection();
+	
+  });
+  </script>
+</head>
+<body style="cursor: auto;">
+
+<div class="container">
+<div class="row"> 
+<div class="col-sm-6">
+	<div class="sec-sortable ui-sortable">
+		<div class="dropable">
+			<div class="sortable">	
+				<div class="row test">
+					<div class="testsort">
+						<div class="col-sm-12 ui-droppable">
+							Drop Field Here
+							<div class="sortinner">
+								<div style="display: block;">fhduhf</div>
+								<div style="display: block;">fhduhf</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="sec-sortable ui-sortable">
+		<div class="dropable ui-droppable ui-sortable-handle">
+			<div class="sortable ui-sortable">
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-sm-3">
+	<div id="drag1">
+		<div class="ui-state-default sec ui-draggable ui-draggable-handle" nos="1" data-class="12">1 col</div>
+		<div class="ui-state-default sec ui-draggable ui-draggable-handle" nos="2" data-class="6">2 col</div>
+		<div class="ui-state-default sec ui-draggable ui-draggable-handle" nos="3" data-class="4">3 col</div>
+		<div class="ui-state-default sec ui-draggable ui-draggable-handle" nos="4" data-class="3">4 col</div>
+	</div>
+</div>
+<div class="col-sm-3">
+	<div id="drag2">
+		<div class="ui-state-default field ui-draggable ui-draggable-handle">Field1</div>
+		<div class="ui-state-default field ui-draggable ui-draggable-handle">Field2</div>
+		<div class="ui-state-default field ui-draggable ui-draggable-handle">Field3</div>
+		<div class="ui-state-default field ui-draggable ui-draggable-handle">Field4</div>
+	</div>
+</div>
+
+
+</div></div></body></html>

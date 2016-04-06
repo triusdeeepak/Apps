@@ -1,0 +1,43 @@
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/demo.css">
+  <!-- Only include on form edit page -->
+  <link rel="stylesheet" type="text/css" media="screen" href="assets/form-builder.min.css">
+  <title>jQuery formBuilder | Drag &amp; Drop Form Creation</title>
+  
+       
+  <form action="">
+    <textarea name="form-builder-template" id="form-builder-template" cols="30" rows="10"></textarea>
+  </form>
+  <p><div class="add_more">AddMore</div></p>
+          
+      
+    
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+  <!-- Only include on form edit page -->
+  <script src="assets/form-builder.min.js"></script>
+  <script>
+  jQuery(document).ready(function($) {
+    'use strict';
+    var template = document.getElementById('form-builder-template'),
+      formContainer = document.getElementById('rendered-form'),
+      renderBtn = document.getElementById('render-form-button');
+    $(template).formBuilder();
+
+    $(renderBtn).click(function(e) {
+      e.preventDefault();
+      $(template).formRender({
+        container: $(formContainer)
+      });
+    });
+    /*custum query*/
+    $(".add_more").click(function(){
+      var cc = 1;
+      $("#frmb-0").after('<ul id="frmb-'+cc+'" class="frmb ui-sortable">'+$("#frmb-0").html()+'</ul>');
+      cc+=1;
+    })
+
+
+  });
+  </script>
+ 
